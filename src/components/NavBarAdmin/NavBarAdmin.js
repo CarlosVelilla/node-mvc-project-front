@@ -5,22 +5,38 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import logo from "../../assets/logo.png";
+
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+    marginBottom: "1rem",
+  },
+  image: {
+    marginRight: "10px",
+    height: "2rem",
+  },
+});
 
 const NavBarAdmin = () => {
+  const classes = useStyles();
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Link to="/dashboard">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <img src={logo} alt="logo" className={classes.image} />
+            </IconButton>
+          </Link>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Dashboard
           </Typography>
