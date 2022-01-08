@@ -114,6 +114,17 @@ const ProductDetails = () => {
           </Grid>
           <Grid>
             <div style={{ height: "100%", paddingTop: 10 }}>
+              <TextField
+                id="outlined-select-currency"
+                type="number"
+                // onChange={handleChange}
+                helperText="Please select the quantity"
+              />
+            </div>
+          </Grid>
+
+          <Grid>
+            <div style={{ height: "100%", paddingTop: 10 }}>
               <Typography variant="h6" color="text.primary" compo>
                 CHOOSE THE SIZE
               </Typography>
@@ -138,7 +149,7 @@ const ProductDetails = () => {
             </div>
           </Grid>
 
-          <Divider light />
+          <Divider />
           <Grid>
             <div style={{ height: "100%", paddingTop: 10 }}>
               <IconButton aria-label="Add to Cart">

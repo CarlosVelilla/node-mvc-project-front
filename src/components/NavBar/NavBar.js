@@ -55,7 +55,7 @@ export default function Navbar() {
                 <strong>SIGN IN</strong>
               </Button>
             </Link>
-            <Link to="/check-out">
+            <Link to="/shopping-cart">
               <IconButton aria-label="show cart items">
                 <Badge badgeContent={4} color="secondary">
                   <ShoppingCartCheckoutIcon fontSize="large" />
