@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useState } from "react";
+import Dropzone from "react-dropzone";
+import PlusOneRoundedIcon from "@mui/icons-material/PlusOneRounded";
 
 import withLayoutAdmin from "../../../../hoc/withLayoutAdmin";
 
@@ -20,8 +22,18 @@ const CreateProducts = () => {
     e.preventDefault();
   };
 
+  const onDrop = (files) => {
+    let formData = new FormData();
+
+    // const config = {
+    //   header: { "content-type": "multipart/form-data" },
+    // };
+
+    formData.append("file", files[0]);
+  };
+
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box
         sx={{
@@ -31,15 +43,58 @@ const CreateProducts = () => {
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Add New Product
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography component="h1" variant="h6">
-                Upload Image Here (add later)
-              </Typography>
+            <Grid
+              item
+              xs={12}
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <Dropzone multiple={false} maxSize={800000000} onDrop={onDrop}>
+                {({ getRootProps, getInputProps }) => (
+                  <div
+                    style={{
+                      width: "250px",
+                      height: "220px",
+                      border: "1px solid lightgray",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    {...getRootProps()}
+                  >
+                    {console.log("getRootProps", { ...getRootProps() })}
+                    {console.log("getInputProps", { ...getInputProps() })}
+                    <input {...getInputProps()} />
+                    <PlusOneRoundedIcon style={{ fontSize: "3rem" }} />
+                  </div>
+                )}
+              </Dropzone>
+              <div
+                style={{
+                  display: "flex",
+                  width: "250px",
+                  height: "220px",
+                  overflowX: "scroll",
+                }}
+              >
+                {/* {Images.map((image, index) => (
+                  <div onClick={() => onDelete(image)}>
+                    <img
+                      style={{
+                        minWidth: "300px",
+                        width: "300px",
+                        height: "240px",
+                      }}
+                      src={`http://localhost:4000/${image}`}
+                      alt={`productImg-${index}`}
+                    />
+                  </div>
+                ))} */}
+              </div>
             </Grid>
             <Grid item xs={12}>
               <TextField

@@ -21,7 +21,7 @@ const CreateUsers = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box
         sx={{
@@ -31,7 +31,7 @@ const CreateUsers = () => {
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Add New User
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
