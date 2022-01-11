@@ -12,6 +12,8 @@ import ListUsers from "./pages/admin/Users/ListUsers";
 import ListProducts from "./pages/admin/Products/ListProducts";
 import CreateProducts from "./pages/admin/Products/CreateProducts";
 import CreateUsers from "./pages/admin/Users/CreateUsers";
+// import PrivateRoute from "./components/PrivateRoute";
+
 function App() {
   return (
     <>

@@ -9,7 +9,9 @@ import logo from "../../assets/logo.png";
 import { makeStyles } from "@mui/styles";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Badge from "@mui/material/Badge";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// import { useStateValue } from "../../context/StateProvider";
+// import { actionTypes } from "../../context/reducer";
 
 const useStyles = makeStyles({
   root: {
@@ -26,6 +28,16 @@ const useStyles = makeStyles({
 
 export default function Navbar() {
   const classes = useStyles();
+
+  let navigate = useNavigate();
+
+  let authToken = localStorage.getItem("authToken");
+
+  const signOutHandler = () => {
+    localStorage.removeItem("authToken");
+    navigate("/");
+  };
+
   return (
     <Box className={classes.root}>
       <AppBar position="static">
@@ -47,14 +59,24 @@ export default function Navbar() {
             sx={{ flexGrow: 1 }}
             color="textPrimary"
           >
-            Hello User
+            Hello Guest
           </Typography>
           <div className={classes.button}>
-            <Link to="/sign-in">
-              <Button variant="outlined" color="inherit">
-                <strong>SIGN IN</strong>
+            {authToken ? (
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={signOutHandler}
+              >
+                <strong>Sign Out</strong>
               </Button>
-            </Link>
+            ) : (
+              <Link to="/sign-in">
+                <Button variant="outlined" color="inherit">
+                  <strong>Sign In</strong>
+                </Button>
+              </Link>
+            )}
             <Link to="/shopping-cart">
               <IconButton aria-label="show cart items">
                 <Badge badgeContent={4} color="secondary">
