@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
@@ -6,6 +6,8 @@ import { makeStyles } from "@mui/styles";
 import withLayoutClient from "../../../hoc/withLayoutClient";
 import TotalAmount from "../../../components/TotalAmount";
 import ShoppingCartItems from "../../../components/ShoppingCartItems";
+
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -18,6 +20,14 @@ const useStyles = makeStyles({
 
 const ShoppingCart = () => {
   const classes = useStyles();
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/sign-in");
+    }
+  }, [navigate]);
 
   return (
     <div className={classes.root}>

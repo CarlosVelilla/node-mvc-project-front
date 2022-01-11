@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -14,6 +14,7 @@ import PaymentForm from "../../../components/PaymentForm";
 import Review from "../../../components/Review";
 
 import withLayoutClient from "../../../hoc/withLayoutClient";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
@@ -42,6 +43,14 @@ const Checkout = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/sign-in");
+    }
+  }, [navigate]);
 
   return (
     <ThemeProvider theme={theme}>

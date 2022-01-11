@@ -1,40 +1,57 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useState } from "react";
-import Dropzone from "react-dropzone";
-import PlusOneRoundedIcon from "@mui/icons-material/PlusOneRounded";
 
+import { useNavigate } from "react-router-dom";
 import withLayoutAdmin from "../../../../hoc/withLayoutAdmin";
+import axios from "axios";
 
 const CreateProducts = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [in_stock, setInStock] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  let navigate = useNavigate();
 
-  const onDrop = (files) => {
-    let formData = new FormData();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    // const config = {
-    //   header: { "content-type": "multipart/form-data" },
-    // };
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
 
-    formData.append("file", files[0]);
+    try {
+      await axios.post(
+        "http://localhost:4000/api/book/",
+        {
+          imageUrl,
+          title,
+          description,
+          price,
+          in_stock,
+        },
+        config,
+      );
+      navigate("/dashboard/products");
+    } catch (error) {
+      setError(error.response.data.error);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
   };
 
   return (
     <Container component="main" maxWidth="sm">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 1,
@@ -46,59 +63,24 @@ const CreateProducts = () => {
         <Typography component="h1" variant="h4">
           Add New Product
         </Typography>
+        {error && <span>{error}</span>}
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid
-              item
-              xs={12}
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Dropzone multiple={false} maxSize={800000000} onDrop={onDrop}>
-                {({ getRootProps, getInputProps }) => (
-                  <div
-                    style={{
-                      width: "250px",
-                      height: "220px",
-                      border: "1px solid lightgray",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                    {...getRootProps()}
-                  >
-                    {console.log("getRootProps", { ...getRootProps() })}
-                    {console.log("getInputProps", { ...getInputProps() })}
-                    <input {...getInputProps()} />
-                    <PlusOneRoundedIcon style={{ fontSize: "3rem" }} />
-                  </div>
-                )}
-              </Dropzone>
-              <div
-                style={{
-                  display: "flex",
-                  width: "250px",
-                  height: "220px",
-                  overflowX: "scroll",
-                }}
-              >
-                {/* {Images.map((image, index) => (
-                  <div onClick={() => onDelete(image)}>
-                    <img
-                      style={{
-                        minWidth: "300px",
-                        width: "300px",
-                        height: "240px",
-                      }}
-                      src={`http://localhost:4000/${image}`}
-                      alt={`productImg-${index}`}
-                    />
-                  </div>
-                ))} */}
-              </div>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="image-url"
+                onChange={(e) => setImageUrl(e.target.value)}
+                name="imageUrl"
+                required
+                fullWidth
+                id="imageUrl"
+                label="Image Url"
+                value={imageUrl}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                autoComplete="given-name"
+                autoComplete="title"
                 onChange={(e) => setTitle(e.target.value)}
                 name="title"
                 required
@@ -142,7 +124,7 @@ const CreateProducts = () => {
                 name="in_stock"
                 label="In Stock"
                 type="number"
-                id="in_-stock"
+                id="in_stock"
                 autoComplete="In Stock"
               />
             </Grid>

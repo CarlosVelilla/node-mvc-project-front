@@ -49,7 +49,7 @@ export default function SignUp() {
 
     try {
       const { data } = await axios.post(
-        "api/auth/sign-up",
+        "http://localhost:4000/api/auth/sign-up",
         {
           fullName,
           email,

@@ -45,7 +45,7 @@ const ListProducts = () => {
     <div className={classes.root}>
       <div className={classes.header}>
         <Typography align="center" gutterBottom variant="h4">
-          Product List
+          Book List
         </Typography>
         <Button variant="contained">
           <Link to="/dashboard/products/create">Add New</Link>
