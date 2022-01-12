@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,6 +13,7 @@ import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
 
 import withLayoutAdmin from "../../../../hoc/withLayoutAdmin";
+import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
@@ -26,21 +27,25 @@ const useStyles = makeStyles({
   },
 });
 
-// Generate Order Data
-function createData(id, title, description, price, in_stock) {
-  return { id, title, description, price, in_stock };
-}
-
-const rows = [
-  createData(0, "16 Mar, 2019", "Elvis Presley", 20, 40),
-  createData(1, "16 Mar, 2019", "Paul McCartney", 50, 16),
-  createData(2, "16 Mar, 2019", "Tom Scholz", 10, 17),
-  createData(3, "16 Mar, 2019", "Michael Jackson", 35, 46),
-  createData(4, "15 Mar, 2019", "London, UK", 40, 25),
-];
-
 const ListProducts = () => {
   const classes = useStyles();
+
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    getAllBooks();
+  }, []);
+
+  const getAllBooks = () => {
+    axios.get("http://localhost:4000/api/book/").then((response) => {
+      if (response.data.success) {
+        setBooks(response.data.books);
+      } else {
+        alert("Fail to fetch books data");
+      }
+    });
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -57,24 +62,24 @@ const ListProducts = () => {
           <TableRow>
             <TableCell>Title</TableCell>
             <TableCell>Description</TableCell>
-            <TableCell>Price</TableCell>
+            <TableCell>Price (EUR)</TableCell>
             <TableCell>In Stock</TableCell>
             <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.title}</TableCell>
-              <TableCell>{row.description}</TableCell>
-              <TableCell>{row.price}</TableCell>
-              <TableCell>{row.in_stock}</TableCell>
+          {books.map((book) => (
+            <TableRow key={book._id}>
+              <TableCell>{book.title}</TableCell>
+              <TableCell>{book.description}</TableCell>
+              <TableCell>{book.price}</TableCell>
+              <TableCell>{book.in_stock}</TableCell>
               <TableCell align="right">
                 <IconButton>
-                  <DeleteForeverIcon fontSize="large" />
+                  <DeleteForeverIcon fontSize="medium" />
                 </IconButton>
                 <IconButton>
-                  <EditIcon fontSize="large" />
+                  <EditIcon fontSize="medium" />
                 </IconButton>
               </TableCell>
             </TableRow>

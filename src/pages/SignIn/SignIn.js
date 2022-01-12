@@ -39,7 +39,7 @@ export default function SignIn() {
 
     try {
       const { data } = await axios.post(
-        "api/auth/sign-in",
+        "http://localhost:4000/api/auth/sign-in",
         {
           email,
           password,

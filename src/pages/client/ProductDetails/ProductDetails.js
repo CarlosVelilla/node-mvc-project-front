@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
@@ -12,6 +12,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 
 import withLayoutClient from "../../../hoc/withLayoutClient";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
@@ -52,29 +54,30 @@ const images = [
   },
 ];
 
-const ProductDetails = () => {
+const ProductDetails = (props) => {
   const classes = useStyles();
+  const [size, setSize] = useState("30ml");
+  // const [Product, setProduct] = useState([]);
+  const id = useParams();
 
-  const [size, setSize] = React.useState("30ml");
+  console.log(id);
 
   const handleChange = (event) => {
     setSize(event.target.value);
   };
 
-  // const [Images, setImages] = useState([]);
-  // useEffect(() => {
-  //   if (images.length > 0) {
-  //     let imagesCollection = [];
-  //     // eslint-disable-next-line array-callback-return
-  //     images.map((item) => {
-  //       imagesCollection.push({
-  //         original: item.original,
-  //         thumbnail: item.thumbnail,
-  //       });
-  //     });
-  //     setImages(imagesCollection);
-  //   }
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/api/book/${id}`)
+      .then((response) => console.log(response));
+  });
+
+  // function getBook() {
+  //   axios.get(`http://localhost:4000/api/book/${id}`).then((response) => {
+  //     console.log(response);
+  //   });
+  // }
+
   return (
     <Box className={classes.root}>
       <Grid container spacing={{ xs: 2, md: 3 }}>

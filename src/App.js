@@ -12,7 +12,6 @@ import ListUsers from "./pages/admin/Users/ListUsers";
 import ListProducts from "./pages/admin/Products/ListProducts";
 import CreateProducts from "./pages/admin/Products/CreateProducts";
 import CreateUsers from "./pages/admin/Users/CreateUsers";
-// import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -21,7 +20,7 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/product" element={<ProductDetails />} />
+            <Route path="/:productId" element={<ProductDetails />} />
             <Route path="/check-out" element={<Checkout />} />
             <Route path="/shopping-cart" element={<ShoppingCart />} />
 

@@ -46,7 +46,7 @@ const CreateUsers = () => {
       setError(error.response.data.error);
       setTimeout(() => {
         setError("");
-      }, 5000);
+      }, 5000000);
     }
   };
 

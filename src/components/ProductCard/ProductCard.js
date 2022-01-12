@@ -11,14 +11,30 @@ import accounting from "accounting";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { useStateValue } from "../../context/StateProvider";
+import { actionTypes } from "../../context/reducer";
 
-export default function ProductCard() {
+export default function ProductCard({ book: { title, imageUrl, price, _id } }) {
+  const [{ basket }, dispatch] = useStateValue();
+
+  const addToBasket = () => {
+    console.log("add");
+    dispatch({
+      type: actionTypes.ADD_TO_BASKET,
+      item: {
+        _id,
+        title,
+        imageUrl,
+        price,
+      },
+    });
+  };
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         action={
           <Typography variant="hs" color="textSecondary" marginTop="1rem">
-            {accounting.formatMoney(50, "€")}
+            {accounting.formatMoney(price, "€")}
           </Typography>
         }
         title="Book"
@@ -27,20 +43,20 @@ export default function ProductCard() {
       <CardMedia
         component="img"
         height="194"
-        image="https://cdn.pixabay.com/photo/2015/11/19/21/10/glasses-1052010_960_720.jpg"
+        image={imageUrl}
         alt="Paella dish"
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          Genre: Sci-fi
+        <Typography variant="h6" color="text.secondary">
+          {title}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="Add to Cart">
+        <IconButton aria-label="Add to Cart" onClick={addToBasket}>
           <AddShoppingCartIcon fontSize="large" />
         </IconButton>
         <Button size="small">
-          <Link to="/product">Learn more</Link>
+          <Link to={`/${_id}`}>Learn more</Link>
         </Button>
       </CardActions>
     </Card>

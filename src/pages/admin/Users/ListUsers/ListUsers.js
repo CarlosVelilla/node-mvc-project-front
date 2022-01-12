@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 import withLayoutAdmin from "../../../../hoc/withLayoutAdmin";
+import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
@@ -26,27 +27,25 @@ const useStyles = makeStyles({
   },
 });
 
-// Generate Order Data
-function createData(id, firstName, lastName, email, role) {
-  return { id, firstName, lastName, email, role };
-}
-
-const rows = [
-  createData(0, "16 Mar, 2019", "Elvis Presley", "Tupelo, MS", "Admin"),
-  createData(1, "16 Mar, 2019", "Paul McCartney", "London, UK", "Employee"),
-  createData(2, "16 Mar, 2019", "Tom Scholz", "Boston, MA", "Client"),
-  createData(3, "16 Mar, 2019", "Michael Jackson", "Gary, IN", "Client"),
-  createData(
-    4,
-    "15 Mar, 2019",
-    "Bruce Springsteen",
-    "Long Branch, NJ",
-    "Client",
-  ),
-];
-
 const ListUsers = () => {
   const classes = useStyles();
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  const getAllUsers = () => {
+    axios.get("http://localhost:4000/api/auth/user").then((response) => {
+      if (response.data.success) {
+        setUsers(response.data.users);
+      } else {
+        alert("Fail to fetch books data");
+      }
+    });
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -60,26 +59,24 @@ const ListUsers = () => {
       <Table size="large">
         <TableHead>
           <TableRow>
-            <TableCell>FistName</TableCell>
-            <TableCell>Last Name</TableCell>
+            <TableCell>Full Name</TableCell>
             <TableCell>Email</TableCell>
             <TableCell>Role</TableCell>
             <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.firstName}</TableCell>
-              <TableCell>{row.lastName}</TableCell>
+          {users.map((row) => (
+            <TableRow key={row._id}>
+              <TableCell>{row.fullName}</TableCell>
               <TableCell>{row.email}</TableCell>
               <TableCell>{row.role}</TableCell>
               <TableCell align="right">
                 <IconButton>
-                  <DeleteForeverIcon fontSize="large" />
+                  <DeleteForeverIcon fontSize="medium" />
                 </IconButton>
                 <IconButton>
-                  <EditIcon fontSize="large" />
+                  <EditIcon fontSize="medium" />
                 </IconButton>
               </TableCell>
             </TableRow>

@@ -1,23 +1,30 @@
+/* eslint-disable no-case-declarations */
 export const initialState = {
-  user: null,
   basket: [],
-  shippingData: [],
-  paymentData: [],
+  user: null,
+  shippingData: {},
 };
 
 export const actionTypes = {
-  SET_USER: "SET_USER",
   ADD_TO_BASKET: "ADD_TO_BASKET",
+  REMOVE_ITEM: "REMOVE_ITEM",
+  SET_USER: "SET_USER",
+  EMPTY_BASKET: "EMPTY_BASKET",
+  SET_SHIPPING_DATA: "SET_SHIPPING_DATA",
+};
+
+export const getBasketTotal = (basket) => {
+  // basket?.reduce((amount, item) => amount + item.price, 0);
+  let totalPrice = 0;
+  for (let i = 0; i < basket.length; i++) {
+    totalPrice += basket[i].price;
+  }
+  return totalPrice;
 };
 
 const reducer = (state, action) => {
   console.log(action);
   switch (action.type) {
-    case "SET_USER":
-      return {
-        ...state,
-        user: action.user, // after that, bind this data to app.js so user info will be available in all app
-      };
     case "ADD_TO_BASKET":
       return {
         ...state,

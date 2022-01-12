@@ -3,6 +3,8 @@ import accounting from "accounting";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
+import { useStateValue } from "../../context/StateProvider";
+import { getBasketTotal } from "../../context/reducer";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -19,11 +21,12 @@ const useStyles = makeStyles(() => ({
 
 const Total = () => {
   const classes = useStyles();
+  const [{ basket }] = useStateValue();
 
   return (
     <div className={classes.root}>
-      <h6>Total items: 4</h6>
-      <h6>{accounting.formatMoney(100, "€")}</h6>
+      <h6>Total items: {basket?.length}</h6>
+      <h6>{accounting.formatMoney(getBasketTotal(basket), "€")}</h6>
       <Link to="/check-out">
         <Button
           className={classes.button}
