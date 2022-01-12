@@ -46,7 +46,9 @@ export default function SignIn() {
         },
         config,
       );
+      console.log(data);
       localStorage.setItem("authToken", data.token);
+      localStorage.setItem("userData", JSON.stringify(data.user));
       navigate("/shopping-cart");
     } catch (error) {
       setError(error.response.data.error);

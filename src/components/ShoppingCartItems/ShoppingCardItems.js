@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,14 +6,28 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Input from "@mui/material/Input";
+import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useStateValue } from "../../context/StateProvider";
+import { actionTypes } from "../../context/reducer";
+import { v4 as uuid } from "uuid";
 
 export default function ShoppingCartItems() {
-  const [quantity, setQuantity] = useState("");
-  const [{ basket }] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
+
+  const removeItem = (id) => {
+    // console.log("delete");
+    dispatch({
+      type: actionTypes.REMOVE_ITEM,
+      id: id,
+    });
+  };
+
+  const testItem = (e) => {
+    console.log(e.target.value);
+  };
+
   return (
     <>
       <Table size="small">
@@ -29,6 +43,9 @@ export default function ShoppingCartItems() {
               <Typography variant="h6">Image</Typography>
             </TableCell>
             <TableCell align="right">
+              <Typography variant="h6">Price</Typography>
+            </TableCell>
+            <TableCell align="right">
               <Typography variant="h6">Amount</Typography>
             </TableCell>
             <TableCell align="right">
@@ -38,13 +55,13 @@ export default function ShoppingCartItems() {
         </TableHead>
         <TableBody>
           {basket.map((item) => (
-            <TableRow key={item._id}>
+            <TableRow key={uuid()}>
               <TableCell>{item.title}</TableCell>
               <TableCell>
-                <Input
+                <TextField
+                  value={item.quantity}
                   type="number"
-                  // value={item.quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
+                  onChange={(e) => testItem(e)}
                 />
               </TableCell>
               <TableCell>
@@ -55,9 +72,10 @@ export default function ShoppingCartItems() {
                   alt="Product"
                 />
               </TableCell>
-              <TableCell align="right">{`€${item.price}`}</TableCell>
+              <TableCell align="right">€{item.price}</TableCell>
+              <TableCell align="right">€{item.price * item.quantity}</TableCell>
               <TableCell align="right">
-                <IconButton onClick>
+                <IconButton onClick={() => removeItem(item.orderId)}>
                   <DeleteForeverIcon fontSize="large" />
                 </IconButton>
               </TableCell>

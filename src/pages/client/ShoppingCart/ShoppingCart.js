@@ -8,7 +8,6 @@ import TotalAmount from "../../../components/TotalAmount";
 import ShoppingCartItems from "../../../components/ShoppingCartItems";
 
 import { useNavigate } from "react-router-dom";
-import { useStateValue } from "../../../context/StateProvider";
 
 const useStyles = makeStyles({
   root: {
@@ -21,7 +20,6 @@ const useStyles = makeStyles({
 
 const ShoppingCart = () => {
   const classes = useStyles();
-  const [{ basket }] = useStateValue();
 
   let navigate = useNavigate();
 

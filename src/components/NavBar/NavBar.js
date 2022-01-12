@@ -11,7 +11,7 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Badge from "@mui/material/Badge";
 import { Link, useNavigate } from "react-router-dom";
 import { useStateValue } from "../../context/StateProvider";
-// import { actionTypes } from "../../context/reducer";
+import { getBasketQuantity } from "../../context/reducer";
 
 const useStyles = makeStyles({
   root: {
@@ -34,7 +34,9 @@ export default function Navbar() {
   let authToken = localStorage.getItem("authToken");
 
   const signOutHandler = () => {
-    localStorage.removeItem("authToken");
+    let keysToRemove = ["authToken", "userData"];
+    keysToRemove.forEach((k) => localStorage.removeItem(k));
+
     navigate("/");
   };
 
@@ -79,7 +81,10 @@ export default function Navbar() {
             )}
             <Link to="/shopping-cart">
               <IconButton aria-label="show cart items">
-                <Badge badgeContent={basket?.length} color="secondary">
+                <Badge
+                  badgeContent={getBasketQuantity(basket)}
+                  color="secondary"
+                >
                   <ShoppingCartCheckoutIcon fontSize="large" />
                 </Badge>
               </IconButton>
