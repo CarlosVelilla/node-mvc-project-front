@@ -1,14 +1,16 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Badge,
+} from "@mui/material";
 import logo from "../../assets/logo.png";
 import { makeStyles } from "@mui/styles";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import Badge from "@mui/material/Badge";
 import { Link, useNavigate } from "react-router-dom";
 import { useStateValue } from "../../context/StateProvider";
 import { getBasketQuantity } from "../../context/reducer";
@@ -36,7 +38,6 @@ export default function Navbar() {
   const signOutHandler = () => {
     let keysToRemove = ["authToken", "userData"];
     keysToRemove.forEach((k) => localStorage.removeItem(k));
-
     navigate("/");
   };
 

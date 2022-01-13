@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -25,7 +26,7 @@ export default function SignUp() {
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
-      navigate("/shopping-cart");
+      navigate("/");
     }
   }, [navigate]);
 

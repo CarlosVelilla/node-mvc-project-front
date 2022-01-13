@@ -1,11 +1,52 @@
-import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import React, { useRef } from "react";
+import {
+  Grid,
+  Typography,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Button,
+} from "@mui/material";
+import { useStateValue } from "../../context/StateProvider";
+import { actionTypes } from "../../context/reducer";
 
 export default function AddressForm() {
+  const firstNameRef = useRef();
+  const lastNameRef = useRef();
+  const address1Ref = useRef();
+  const address2Ref = useRef();
+  const cityRef = useRef();
+  const regionRef = useRef();
+  const zipRef = useRef();
+  const countryRef = useRef();
+
+  const [, dispatch] = useStateValue();
+
+  const addToOrder = () => {
+    const firstName = firstNameRef.current.value;
+    const lastName = lastNameRef.current.value;
+    const address1 = address1Ref.current.value;
+    const address2 = address2Ref.current.value;
+    const city = cityRef.current.value;
+    const region = regionRef.current.value;
+    const zip = zipRef.current.value;
+    const country = countryRef.current.value;
+
+    dispatch({
+      type: actionTypes.SET_SHIPPING_DATA,
+      data: {
+        firstName,
+        lastName,
+        address1,
+        address2,
+        city,
+        region,
+        zip,
+        country,
+      },
+    });
+  };
+
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -21,6 +62,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            inputRef={firstNameRef}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -32,6 +74,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="family-name"
             variant="standard"
+            inputRef={lastNameRef}
           />
         </Grid>
         <Grid item xs={12}>
@@ -43,6 +86,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
+            inputRef={address1Ref}
           />
         </Grid>
         <Grid item xs={12}>
@@ -53,6 +97,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
+            inputRef={address2Ref}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -64,6 +109,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
+            inputRef={cityRef}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -73,6 +119,7 @@ export default function AddressForm() {
             label="State/Province/Region"
             fullWidth
             variant="standard"
+            inputRef={regionRef}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -84,6 +131,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping postal-code"
             variant="standard"
+            inputRef={zipRef}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -95,6 +143,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
+            inputRef={countryRef}
           />
         </Grid>
         <Grid item xs={12}>
@@ -105,6 +154,9 @@ export default function AddressForm() {
             label="Use this address for payment details"
           />
         </Grid>
+        <Button onClick={addToOrder} sx={{ mt: 3, ml: 1 }}>
+          <strong>Save Data</strong>
+        </Button>
       </Grid>
     </>
   );

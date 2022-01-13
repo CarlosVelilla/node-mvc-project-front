@@ -1,7 +1,6 @@
 import React from "react";
 import accounting from "accounting";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { Button, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../context/StateProvider";

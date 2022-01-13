@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import { Grid, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import withLayoutClient from "../../../hoc/withLayoutClient";
@@ -13,8 +12,8 @@ const useStyles = makeStyles({
   root: {
     flexGrow: 1,
     padding: "2rem",
-    marginLeft: "5rem",
-    marginRight: "5rem",
+    marginLeft: "1rem",
+    marginRight: "1rem",
   },
 });
 

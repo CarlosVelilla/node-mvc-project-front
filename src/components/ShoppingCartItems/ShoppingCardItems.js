@@ -1,13 +1,15 @@
 import React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  CardMedia,
+  Typography,
+  TextField,
+  IconButton,
+} from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useStateValue } from "../../context/StateProvider";
 import { actionTypes } from "../../context/reducer";
@@ -17,15 +19,10 @@ export default function ShoppingCartItems() {
   const [{ basket }, dispatch] = useStateValue();
 
   const removeItem = (id) => {
-    // console.log("delete");
     dispatch({
       type: actionTypes.REMOVE_ITEM,
       id: id,
     });
-  };
-
-  const testItem = (e) => {
-    console.log(e.target.value);
   };
 
   return (
@@ -34,22 +31,34 @@ export default function ShoppingCartItems() {
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography variant="h6">Title</Typography>
+              <Typography variant="hs">
+                <strong>Title</strong>
+              </Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h6">Quantity</Typography>
+              <Typography variant="hs">
+                <strong>Quantity</strong>
+              </Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h6">Image</Typography>
+              <Typography variant="hs">
+                <strong>Image</strong>
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="h6">Price</Typography>
+              <Typography variant="hs">
+                <strong>Price</strong>
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="h6">Amount</Typography>
+              <Typography variant="hs">
+                <strong>Amount</strong>
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="h6">Action</Typography>
+              <Typography variant="hs">
+                <strong>Action</strong>
+              </Typography>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -58,11 +67,7 @@ export default function ShoppingCartItems() {
             <TableRow key={uuid()}>
               <TableCell>{item.title}</TableCell>
               <TableCell>
-                <TextField
-                  value={item.quantity}
-                  type="number"
-                  onChange={(e) => testItem(e)}
-                />
+                <TextField value={item.quantity} type="number" />
               </TableCell>
               <TableCell>
                 <CardMedia

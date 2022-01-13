@@ -1,10 +1,7 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
+import { TextField, IconButton, InputAdornment, Grid } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import Grid from "@mui/material/Grid";
 
 const Input = ({
   name,

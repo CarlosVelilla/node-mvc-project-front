@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
 import { makeStyles } from "@mui/styles";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import {
+  Grid,
+  Typography,
+  IconButton,
+  TextField,
+  MenuItem,
+  Divider,
+  Box,
+  CardMedia,
+} from "@mui/material";
 import accounting from "accounting";
-import IconButton from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 
 import withLayoutClient from "../../../hoc/withLayoutClient";
 import { useParams } from "react-router-dom";
@@ -23,8 +25,9 @@ const useStyles = makeStyles({
   root: {
     flexGrow: 1,
     padding: "2rem",
-    marginLeft: "10rem",
-    marginRight: "10rem",
+    marginTop: "2rem",
+    marginLeft: "4rem",
+    marginRight: "4rem",
   },
 });
 
@@ -39,7 +42,7 @@ const version = [
   },
 ];
 
-const ProductDetails = (props) => {
+const ProductDetails = () => {
   const classes = useStyles();
   const [size, setSize] = useState("hard_cover");
   const [Product, setProduct] = useState({});
@@ -47,8 +50,6 @@ const ProductDetails = (props) => {
   const [, dispatch] = useStateValue();
   const quantityRef = useRef();
   const typeRef = useRef();
-
-  // console.log(props);
 
   const handleChange = (event) => {
     setSize(event.target.value);
@@ -64,7 +65,6 @@ const ProductDetails = (props) => {
     const { _id, title, imageUrl, price } = Product;
     const quantity = parseInt(quantityRef.current.value);
     const type = typeRef.current.value;
-    // console.log(quantity);
     const orderId = uuid();
     dispatch({
       type: actionTypes.ADD_TO_BASKET,
@@ -82,30 +82,15 @@ const ProductDetails = (props) => {
 
   return (
     <Box className={classes.root}>
-      <Grid container spacing={{ xs: 2, md: 3 }}>
-        <Grid item xs={6}>
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              "& > :not(style)": {
-                m: 1,
-                width: 250,
-                height: 180,
-              },
-            }}
-          >
-            <Paper variant="outlined">
-              <img
-                src={Product.imageUrl}
-                alt="Product"
-                width="250"
-                height="180"
-              />
-            </Paper>
-          </Box>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={8} md={8} container spacing={2}>
+          <CardMedia
+            component="img"
+            image={Product.imageUrl}
+            alt="Book Image"
+          />
         </Grid>
-        <Grid item xs={6} layout={"row"} spacing={10}>
+        <Grid item xs={12} sm={4} md={4}>
           <Grid>
             <div style={{ height: "100%" }}>
               <Typography variant="h4" color="text.secondary" compo>
@@ -127,13 +112,6 @@ const ProductDetails = (props) => {
               </Typography>
             </div>
           </Grid>
-          {/* <Grid>
-            <div style={{ height: "100%", paddingTop: 10 }}>
-              <Typography variant="body1" color="text.secondary" compo>
-                {Product.in_stock} in stock
-              </Typography>
-            </div>
-          </Grid> */}
           <Grid>
             <div style={{ height: "100%", paddingTop: 10 }}>
               <Typography variant="h7" color="text.primary" compo>

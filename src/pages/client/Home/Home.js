@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import { Box, Grid } from "@mui/material";
 
 import withLayoutClient from "../../../hoc/withLayoutClient";
 import ProductCard from "../../../components/ProductCard";

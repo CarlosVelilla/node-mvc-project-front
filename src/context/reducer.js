@@ -1,17 +1,20 @@
 /* eslint-disable no-case-declarations */
 export const initialState = {
-  basket: [],
+  basket: localStorage.getItem("basket")
+    ? JSON.parse(localStorage.getItem("basket"))
+    : [],
   user: null,
-  shippingData: {},
+  shippingAddress: "",
+  payment: "",
 };
 
 export const actionTypes = {
   ADD_TO_BASKET: "ADD_TO_BASKET",
   REMOVE_ITEM: "REMOVE_ITEM",
-  // ADD_QUANTITY: "ADD_QUANTITY",
   SET_USER: "SET_USER",
   EMPTY_BASKET: "EMPTY_BASKET",
   SET_SHIPPING_DATA: "SET_SHIPPING_DATA",
+  SET_PAYMENT_DATA: "SET_PAYMENT_DATA",
 };
 
 export const getBasketQuantity = (basket) => {
@@ -35,6 +38,7 @@ const reducer = (state, action) => {
   // console.log(action);
   switch (action.type) {
     case "ADD_TO_BASKET":
+      console.log(action.item);
       return {
         ...state,
         basket: [...state.basket, action.item],
@@ -44,12 +48,16 @@ const reducer = (state, action) => {
         ...state,
         basket: state.basket.filter((element) => element.orderId !== action.id),
       };
-    // case "ADD_QUANTITY":
-    //   const item = state.basket.filter((element) => element.orderId === action.id)
-    //   return {
-    //     ...state,
-    //     basket: [...state.basket, action.item],
-    //   };
+    case "SET_SHIPPING_DATA":
+      return {
+        ...state,
+        shippingAddress: action.data,
+      };
+    case "SET_PAYMENT_DATA":
+      return {
+        ...state,
+        payment: action.data,
+      };
     default:
       return state;
   }

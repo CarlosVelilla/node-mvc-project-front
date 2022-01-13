@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import {
+  Button,
+  TextField,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 import withLayoutAdmin from "../../../../hoc/withLayoutAdmin";
@@ -18,7 +20,7 @@ const CreateProducts = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();

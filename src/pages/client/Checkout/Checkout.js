@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import {
+  Box,
+  Container,
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+} from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AddressForm from "../../../components/AddressForm";
 import PaymentForm from "../../../components/PaymentForm";
@@ -15,6 +17,8 @@ import Review from "../../../components/Review";
 
 import withLayoutClient from "../../../hoc/withLayoutClient";
 import { useNavigate } from "react-router-dom";
+import { useStateValue } from "../../../context/StateProvider";
+import axios from "axios";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
@@ -34,10 +38,57 @@ function getStepContent(step) {
 const theme = createTheme();
 
 const Checkout = () => {
+  const [currentShippingData, setCurrentShippingData] = useState();
+  const [currentPaymentData, setCurrentPaymentData] = useState();
+  const [error, setError] = useState("");
+
   const [activeStep, setActiveStep] = React.useState(0);
+  const [{ basket, shippingAddress, payment }] = useStateValue();
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+    if (activeStep === 2) {
+      return postOrder();
+    }
+    switch (activeStep) {
+      case 0:
+        setCurrentShippingData(shippingAddress);
+        break;
+      case 1:
+        setCurrentPaymentData(payment);
+        break;
+      default:
+        return;
+    }
+  };
+
+  const postOrder = async () => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const userId = userData._id;
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      await axios.post(
+        "http://localhost:4000/api/order/",
+        {
+          userId,
+          basket,
+          shippingAddress,
+          payment,
+        },
+        config,
+      );
+    } catch (error) {
+      setError(error.response.data.error);
+      setTimeout(() => {
+        setError("");
+      }, 5000000);
+    }
   };
 
   const handleBack = () => {
